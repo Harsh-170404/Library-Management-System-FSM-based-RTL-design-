@@ -159,28 +159,3 @@ The verification environment covers:
 
 ---
 
-## Project Structure
-
-```
-├── rtl/
-│   ├── library_fsm.sv
-│   ├── book_db.sv
-│   ├── fine_calc.sv
-│   ├── config_regs.sv
-│   ├── txn_logger.sv
-│   └── top.sv
-│
-├── tb/
-    ├── transaction.sv
-    ├── sequence.sv
-    ├── sequencer.sv
-    ├── driver.sv
-    ├── monitor.sv
-    ├── scoreboard.sv
-    ├── agent.sv
-    ├── env.sv
-    ├── test.sv
-    └── top_tb.sv
-
-
-```
