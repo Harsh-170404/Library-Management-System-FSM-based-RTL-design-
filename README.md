@@ -1,66 +1,86 @@
-# Library Self-Checkout & Fine Management System — RTL Design & Verification (SystemVerilog)
+# Library Self-Checkout & Fine Management System — RTL Design & UVM Verification (SystemVerilog)
 
 A complete **FSM-based digital library management system** implemented in **SystemVerilog RTL**, supporting book issue/return operations, late fine calculation, maintenance configuration, and transaction logging.
 
-The project focuses on designing a **modular, synthesizable hardware system** with clear **control–datapath separation**, verified using **directed test scenarios**.
+The project focuses on designing a **modular, synthesizable RTL architecture** and verifying it using a **reusable UVM (Universal Verification Methodology) testbench** with directed and constrained-random verification.
 
 ---
 
 ## Key Features
 
-- **Mealy FSM-based control logic**
-- Modular **control and datapath architecture**
+- **Moore FSM-based control logic**
+- Modular **control–datapath architecture**
 - **Book availability and due-date tracking**
 - Automatic **late fine calculation**
 - **Configurable fine rate and borrow duration**
-- Dedicated **maintenance mode for runtime updates**
+- Dedicated **maintenance mode for runtime configuration**
 - **Circular buffer-based transaction logging**
 - Robust **error handling mechanism**
 - Fully **synthesizable RTL design**
-- Verified using **Vivado XSIM simulation**
+- Verified using a **UVM-based verification environment**
 
 ---
 
-## Design Architecture
+## RTL Design Architecture
 
 The RTL design is organized into modular components:
 
-- **FSM Controller (`library_fsm`)**
-  - Controls system flow using Mealy FSM
-  - Handles issue, return, fine calculation, maintenance, and error states
+### FSM Controller (`library_fsm`)
+- Implements Moore FSM for system control
+- Handles issue, return, maintenance, fine calculation, and error states
 
-- **Book Database (`book_db`)**
-  - Stores book availability and due dates
-  - Supports issue, return, and maintenance updates
+### Book Database (`book_db`)
+- Maintains book availability and due-date information
+- Supports issue, return, and maintenance operations
 
-- **Fine Calculation (`fine_calc`)**
-  - Computes fine based on late return days
-  - Uses configurable fine rate
+### Fine Calculation (`fine_calc`)
+- Computes fine based on overdue days
+- Uses configurable fine rate
 
-- **Configuration Registers (`config_regs`)**
-  - Stores fine rate and borrow duration
-  - Allows runtime updates via maintenance mode
+### Configuration Registers (`config_regs`)
+- Stores borrow duration and fine rate
+- Supports runtime updates during maintenance mode
 
-- **Transaction Logger (`txn_logger`)**
-  - Implements circular buffer for transaction history
-  - Stores book ID, operation type, and fine amount
+### Transaction Logger (`txn_logger`)
+- Implements circular buffer for transaction history
+- Records book ID, operation type, and fine amount
 
-- **Top-Level Module (`top`)**
-  - Integrates all submodules
-  - Provides clean system-level interface
+### Top-Level Module (`top`)
+- Integrates all RTL submodules
+- Provides system-level interface
 
 ---
 
-## Verification Approach
+# UVM Verification Architecture
 
-The design is verified using a **SystemVerilog testbench with directed test scenarios**.
+The RTL is verified using a reusable **UVM testbench** consisting of:
 
-The testbench includes:
+- UVM Test
+- UVM Environment
+- UVM Agent
+- UVM Sequencer
+- UVM Driver
+- UVM Monitor
+- UVM Scoreboard
+- Sequence Items
+- Directed and Constrained-Random Sequences
+- Functional Coverage
 
-- Clock and reset generation  
-- Sequential stimulus application  
-- Manual scenario-based verification  
-- Waveform-based validation of outputs  
+The verification environment follows the standard UVM layered architecture, enabling scalability and reuse.
+
+---
+
+## Verification Methodology
+
+The UVM environment performs:
+
+- Transaction-level stimulus generation
+- Driver-based DUT interface communication
+- Passive monitoring of DUT transactions
+- Scoreboard-based functional checking
+- Functional coverage collection
+- Directed and constrained-random verification
+- Waveform-based debugging
 
 Simulation is performed using **Vivado XSIM**.
 
@@ -68,58 +88,99 @@ Simulation is performed using **Vivado XSIM**.
 
 ## Verification Scenarios
 
-The following directed test scenarios are implemented:
+The verification environment covers:
 
-1. **Reset Initialization**
-   - Verifies proper system reset and FSM initialization
+1. Reset Initialization
+   - Verifies proper reset behavior and FSM initialization
 
-2. **Maintenance Mode Configuration**
-   - Updates fine rate using configuration registers
-   - Verifies maintenance mode entry and exit
+2. Maintenance Mode Configuration
+   - Updates fine rate and borrow duration
+   - Verifies configuration register updates
 
-3. **Book Issue Operation**
-   - Issues a book and updates database state
+3. Book Issue Operation
+   - Verifies successful issue transaction
+   - Checks database updates
 
-4. **Return Without Fine**
-   - Returns book within allowed period
-   - Verifies fine = 0
+4. Book Return (No Fine)
+   - Verifies return within due period
+   - Confirms zero fine generation
 
-5. **Late Return with Fine Calculation**
-   - Returns book after due date
-   - Verifies fine calculation logic
+5. Late Return with Fine
+   - Verifies overdue fine calculation
+   - Checks fine amount correctness
 
-6. **Error Injection**
-   - Forces system into ERROR state
-   - Verifies global error handling
+6. Invalid Transactions
+   - Attempts invalid issue/return operations
+   - Verifies error handling
+
+7. Maintenance Mode Stress Testing
+   - Performs multiple configuration updates
+   - Verifies stable operation
 
 ---
 
-## Key Design Insight
+## Key Design Insights
 
-Separating **control logic (FSM)** from **datapath modules** improves modularity, scalability, and synthesis efficiency.
-
-Using **configurable registers** instead of hardcoded values allows dynamic system behavior without modifying RTL.
+- Modular control–datapath separation improves scalability and synthesis efficiency.
+- Reusable UVM components enable verification environment portability.
+- Scoreboard-based checking simplifies functional validation.
+- Functional coverage helps measure verification completeness.
+- Configurable registers improve RTL flexibility without code modification.
 
 ---
 
 ## Skills Demonstrated
 
-- FSM-based RTL design
-- Control–datapath separation
-- SystemVerilog modular design
-- Directed functional verification
-- Debugging using waveform analysis
-- Hardware-oriented system design
+### RTL Design
+- FSM-based RTL Design
+- Modular SystemVerilog Design
+- Control–Datapath Separation
+- Parameterized Hardware Design
+- Synthesizable RTL
+
+### Verification
+- UVM Verification Methodology
+- Testbench Development
+- Driver, Monitor, Sequencer & Scoreboard
+- Functional Coverage
+- Directed & Constrained-Random Verification
+- Transaction-Level Verification
+- Waveform Debugging
 
 ---
 
 ## Technologies
 
-- **SystemVerilog**
-- **RTL Design**
-- **Digital Design Verification**
-- **Vivado (XSIM & Synthesis)**
+- SystemVerilog
+- UVM (Universal Verification Methodology)
+- RTL Design
+- Digital Design Verification
+- Vivado (XSIM)
 
 ---
 
 ## Project Structure
+
+```
+├── rtl/
+│   ├── library_fsm.sv
+│   ├── book_db.sv
+│   ├── fine_calc.sv
+│   ├── config_regs.sv
+│   ├── txn_logger.sv
+│   └── top.sv
+│
+├── tb/
+    ├── transaction.sv
+    ├── sequence.sv
+    ├── sequencer.sv
+    ├── driver.sv
+    ├── monitor.sv
+    ├── scoreboard.sv
+    ├── agent.sv
+    ├── env.sv
+    ├── test.sv
+    └── top_tb.sv
+
+
+```
